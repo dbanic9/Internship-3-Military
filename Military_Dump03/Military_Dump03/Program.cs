@@ -11,6 +11,8 @@ namespace Military_Dump03
             var warship = new Warship("Warship", 35000, 50);
             var tank = new Tank("Tank", 57000, 30);
 
+           tank.StartTrip();
+           tank.Print();
             
         }
     }

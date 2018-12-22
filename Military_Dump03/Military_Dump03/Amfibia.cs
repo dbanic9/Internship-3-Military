@@ -17,6 +17,20 @@ namespace Military_Dump03
             Capacity = 20;
         }
 
+        private double FuelTotal { get; set; }
+
+        public override void Print()
+        {
+            var format = $"ID: {ID},\n" +
+                         $"Weight: {Weight},\n" +
+                         $"Avg. Speed: {AverageSpeed},\n" +
+                         $"Fuel Consumption: {FuelConsumption},\n" +
+                         $"Capacity: {Capacity},\n" +
+                         $"Total fuel consumption: {FuelTotal}L \n";
+
+            Console.WriteLine(format);
+        }
+
         public int Swim(Distance distance)
         {
             var simulation = 0;
@@ -78,7 +92,7 @@ namespace Military_Dump03
 
         }
 
-        public int TripSimulation(int moveDirection, int people)
+        private int TripSimulation(int moveDirection, int people)
         {
             var trips = 0;
             if (people < Capacity)
@@ -99,9 +113,25 @@ namespace Military_Dump03
             return trips * moveDirection;
         }
 
-        public double TotalFuelPerTrip(int simulationDistance)
+        private double TotalFuelPerTrip(int simulationDistance)
         {
             return 0.7 * simulationDistance;
+        }
+
+        public void StartTrip()
+        {
+            Console.WriteLine("Enter amfibia land distance:");
+            var land = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter amfibia water distance:");
+            var water = int.Parse(Console.ReadLine());
+            var distance = new Distance(land,water);
+            Console.WriteLine("Enter the number of people:");
+            var people = int.Parse(Console.ReadLine());
+            var swim = Swim(distance);
+            var move = Move(distance);
+            var trip = TripSimulation(swim+move, people);
+            FuelTotal = TotalFuelPerTrip(trip);
+
         }
     }
 }

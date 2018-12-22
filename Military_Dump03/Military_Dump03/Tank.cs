@@ -19,6 +19,8 @@ namespace Military_Dump03
             Capacity = 6;
         }
 
+        private double FuelTotal { get; set; }
+
         public override void Print()
         {
             var format = $"ID: {ID},\n" +
@@ -26,7 +28,7 @@ namespace Military_Dump03
                          $"Avg. Speed: {AverageSpeed},\n" +
                          $"Fuel Consumption: {FuelConsumption},\n" +
                          $"Capacity: {Capacity},\n" +
-                         $"Total fuel consumption:  \n";
+                         $"Total fuel consumption: {FuelTotal}L \n";
 
             Console.WriteLine(format);
         }
@@ -61,7 +63,7 @@ namespace Military_Dump03
 
         }
 
-        public int TripSimulation(int moveDirection, int people)
+        private int TripSimulation(int moveDirection, int people)
         {
             var trips = 0;
             if (people < Capacity)
@@ -82,9 +84,20 @@ namespace Military_Dump03
             return trips * moveDirection;
         }
 
-        public double TotalFuelPerTrip(int simulationDistance)
+        private double TotalFuelPerTrip(int simulationDistance)
         {
             return 0.3 * simulationDistance;
+        }
+
+        public void StartTrip()
+        {
+            Console.WriteLine("Enter tank distance:");
+            var distance = new Distance(int.Parse(Console.ReadLine()),0);
+            Console.WriteLine("Enter the number of people:");
+            var people = int.Parse(Console.ReadLine());
+            var move = Move(distance);
+            var trip = TripSimulation(move, people);
+            FuelTotal = TotalFuelPerTrip(trip);
         }
     }
 }
