@@ -69,5 +69,10 @@ namespace Military_Dump03
 
             return trips * moveDirection;
         }
+
+        public double TotalFuelPerTrip(int simulationDistance)
+        {
+            return 2 * simulationDistance;
+        }
     }
 }
