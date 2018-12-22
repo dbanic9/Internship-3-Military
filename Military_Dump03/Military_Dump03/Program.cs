@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Military_Dump03
 {
@@ -6,9 +7,11 @@ namespace Military_Dump03
     {
         static void Main(string[] args)
         {
-            var amfibia = new Amfibia(1, 30000, 25);
-            var warship = new Warship(1, 35000, 50);
-            var tank = new Tank(1, 57000, 30);
+            var amfibia = new Amfibia("Amfibia", 30000, 25);
+            var warship = new Warship("Warship", 35000, 50);
+            var tank = new Tank("Tank", 57000, 30);
+
+            
         }
     }
 }

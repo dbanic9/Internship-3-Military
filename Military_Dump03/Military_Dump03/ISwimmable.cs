@@ -6,6 +6,6 @@ namespace Military_Dump03
 {
     public interface ISwimmable
     {
-        
+        int Swim(Distance distance);
     }
 }

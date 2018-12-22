@@ -4,9 +4,13 @@ using System.Text;
 
 namespace Military_Dump03
 {
-    public sealed class Tank : Vehicle,IDriveable
+    internal sealed class Tank : Vehicle, IDriveable
     {
-        public Tank(int id, int weight, int averageSpeed)
+        public Tank()
+        {
+        }
+
+        public Tank(string id, int weight, int averageSpeed)
         {
             ID = id;
             Weight = weight;
@@ -14,5 +18,50 @@ namespace Military_Dump03
             FuelConsumption = 30;
             Capacity = 6;
         }
+
+        public override void Print()
+        {
+            var format = $"ID: {ID},\n" +
+                         $"Weight: {Weight},\n" +
+                         $"Avg. Speed: {AverageSpeed},\n" +
+                         $"Fuel Consumption: {FuelConsumption},\n" +
+                         $"Capacity: {Capacity},\n" +
+                         $"Total fuel consumption:  \n";
+
+            Console.WriteLine(format);
+        }
+
+        public int Move(Distance distance)
+        {
+            var simulation = 0;
+            var destination = distance.Total;
+          
+            var rnd = new Random();
+
+            var checkPoint = 10;
+
+            for (var km = 0; km < destination; km++)
+            {
+                if (km == checkPoint)
+                {
+                    var rand = rnd.Next(1, 101);
+                    if (rand <= 33)
+                    {
+                        destination += 5;
+                    }
+
+                    checkPoint += 10;
+                }
+
+                km += 1;
+                simulation = km;
+            }
+
+            return simulation;
+
+        }
+
+ 
+
     }
 }
