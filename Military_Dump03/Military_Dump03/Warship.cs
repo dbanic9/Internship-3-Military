@@ -49,6 +49,25 @@ namespace Military_Dump03
             
         }
 
+        public int TripSimulation(int moveDirection, int people)
+        {
+            var trips = 0;
+            if (people < Capacity)
+            {
+                trips = 1;
+            }
 
+            else if (people > Capacity && people % Capacity == 0)
+            {
+                trips = 2 * (people / Capacity) - 1;
+            }
+
+            else
+            {
+                trips = 2 * (people / Capacity + 1) - 1;
+            }
+
+            return trips * moveDirection;
+        }
     }
 }
