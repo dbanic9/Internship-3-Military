@@ -70,8 +70,6 @@ namespace Military_Dump03
 
                     checkPoint += 10;
                 }
-
-                km += 1;
                 simulation = km;
             }
 
