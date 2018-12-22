@@ -1,25 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http.Headers;
 using System.Text;
 
 namespace Military_Dump03
 {
-    internal sealed class Warship : Vehicle,ISwimmable
+    internal partial class Tank
     {
-        public Warship() { }
-
-        public Warship(string id, int weight, int averageSpeed)
-        {
-            ID = id;
-            Weight = weight;
-            AverageSpeed = averageSpeed;
-            FuelConsumption = 200;
-            Capacity = 50;
-        }
-
-        private double FuelTotal { get; set; }
-
         public override void Print()
         {
             var format = $"ID: {ID},\n" +
@@ -27,32 +13,31 @@ namespace Military_Dump03
                          $"Avg. Speed: {AverageSpeed},\n" +
                          $"Fuel Consumption: {FuelConsumption},\n" +
                          $"Capacity: {Capacity},\n" +
-                         $"Total fuel consumption: {FuelTotal}L  \n";
+                         $"Total fuel consumption: {FuelTotal}L \n";
 
             Console.WriteLine(format);
         }
 
-        public int Swim(Distance distance)
+        public int Move(Distance distance)
         {
             var simulation = 0;
             var destination = distance.Total;
 
             var rnd = new Random();
 
-            var everyTenMin = Math.Round(AverageSpeed * 0.17);
-            var checkPoint = everyTenMin;
+            var checkPoint = 10;
 
             for (var km = 0; km < destination; km++)
             {
                 if (km == checkPoint)
                 {
                     var rand = rnd.Next(1, 101);
-                    if (rand <= 50)
+                    if (rand <= 33)
                     {
-                        destination += 3;
+                        destination += 5;
                     }
 
-                    checkPoint += everyTenMin;
+                    checkPoint += 10;
                 }
 
                 km += 1;
@@ -60,7 +45,7 @@ namespace Military_Dump03
             }
 
             return simulation;
-            
+
         }
 
         private int TripSimulation(int moveDirection, int people)
@@ -86,19 +71,18 @@ namespace Military_Dump03
 
         private double TotalFuelPerTrip(int simulationDistance)
         {
-            return 2 * simulationDistance;
+            return 0.3 * simulationDistance;
         }
 
         public void StartTrip()
         {
-            Console.WriteLine("Enter warship distance:");
-            var distance = new Distance(0,int.Parse(Console.ReadLine()));
+            Console.WriteLine("Enter tank distance:");
+            var distance = new Distance(int.Parse(Console.ReadLine()), 0);
             Console.WriteLine("Enter the number of people:");
             var people = int.Parse(Console.ReadLine());
-            var swim = Swim(distance);
-            var trip = TripSimulation(swim, people);
+            var move = Move(distance);
+            var trip = TripSimulation(move, people);
             FuelTotal = TotalFuelPerTrip(trip);
-
         }
     }
 }

@@ -4,23 +4,8 @@ using System.Text;
 
 namespace Military_Dump03
 {
-    internal sealed class Tank : Vehicle, IDriveable
+    internal partial class Amfibia
     {
-        public Tank()
-        {
-        }
-
-        public Tank(string id, int weight, int averageSpeed)
-        {
-            ID = id;
-            Weight = weight;
-            AverageSpeed = averageSpeed;
-            FuelConsumption = 30;
-            Capacity = 6;
-        }
-
-        private double FuelTotal { get; set; }
-
         public override void Print()
         {
             var format = $"ID: {ID},\n" +
@@ -33,11 +18,42 @@ namespace Military_Dump03
             Console.WriteLine(format);
         }
 
+        public int Swim(Distance distance)
+        {
+            var simulation = 0;
+            var destination = distance.Water;
+
+            var rnd = new Random();
+
+            var everyTenMin = Math.Round(AverageSpeed * 0.17);
+            var checkPoint = everyTenMin;
+
+            for (var km = 0; km < destination; km++)
+            {
+                if (km == checkPoint)
+                {
+                    var rand = rnd.Next(1, 101);
+                    if (rand <= 50)
+                    {
+                        destination += 3;
+                    }
+
+                    checkPoint += everyTenMin;
+                }
+
+                km += 1;
+                simulation = km;
+            }
+
+            return simulation;
+
+        }
+
         public int Move(Distance distance)
         {
             var simulation = 0;
-            var destination = distance.Total;
-          
+            var destination = distance.Land;
+
             var rnd = new Random();
 
             var checkPoint = 10;
@@ -86,18 +102,23 @@ namespace Military_Dump03
 
         private double TotalFuelPerTrip(int simulationDistance)
         {
-            return 0.3 * simulationDistance;
+            return 0.7 * simulationDistance;
         }
 
         public void StartTrip()
         {
-            Console.WriteLine("Enter tank distance:");
-            var distance = new Distance(int.Parse(Console.ReadLine()),0);
+            Console.WriteLine("Enter amfibia land distance:");
+            var land = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter amfibia water distance:");
+            var water = int.Parse(Console.ReadLine());
+            var distance = new Distance(land, water);
             Console.WriteLine("Enter the number of people:");
             var people = int.Parse(Console.ReadLine());
+            var swim = Swim(distance);
             var move = Move(distance);
-            var trip = TripSimulation(move, people);
+            var trip = TripSimulation(swim + move, people);
             FuelTotal = TotalFuelPerTrip(trip);
+
         }
     }
 }

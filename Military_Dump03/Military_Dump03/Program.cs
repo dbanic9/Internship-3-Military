@@ -11,8 +11,26 @@ namespace Military_Dump03
             var warship = new Warship("Warship", 35000, 50);
             var tank = new Tank("Tank", 57000, 30);
 
-           tank.StartTrip();
-           tank.Print();
+
+            amfibia.StartTrip();
+            warship.StartTrip();
+            tank.StartTrip();
+
+            Console.WriteLine("\n");
+            Console.WriteLine("Best vehicle choice:\n");
+
+            if (amfibia.FuelTotal < warship.FuelTotal && amfibia.FuelTotal < tank.FuelTotal)
+            {
+                amfibia.Print();
+            }
+            else if (warship.FuelTotal < amfibia.FuelTotal && warship.FuelTotal < tank.FuelTotal)
+            {
+                warship.Print();
+            }
+            else if (tank.FuelTotal < amfibia.FuelTotal && tank.FuelTotal < warship.FuelTotal)
+            {
+                tank.Print();
+            }
             
         }
     }
